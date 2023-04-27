@@ -1,0 +1,37 @@
+{% extends '/admin/index.html.twig' %}
+
+{% block title %}Les contenus{% endblock %}
+
+{% block body %}
+    <h1>Les contenus</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date de création</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for content in contents %}
+            <tr>
+                <td>{{ content.title }}</td>
+                <td>{{ content.description }}</td>
+                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_content_show', {'id': content.id}) }}">show</a>
+                    <a href="{{ path('app_content_edit', {'id': content.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_content_new') }}">Créer un contenu</a>
+{% endblock %}

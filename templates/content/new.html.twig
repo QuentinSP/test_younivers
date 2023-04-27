@@ -1,0 +1,13 @@
+{% extends '/admin/index.html.twig' %}
+
+{% block title %}New Content{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau contenu</h1>
+
+    {{ include('content/_form.html.twig') }}
+
+    <a href="{{ path('app_content_index') }}">Voir tous mes contenus</a>
+    <br>
+    <a href="{{ path('admin') }}">Retour</a>
+{% endblock %}
