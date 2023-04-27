@@ -82,6 +82,25 @@ class ContentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // récupération des images
+            $images = $form->get('images')->getData();
+
+            foreach($images as $image){
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Image();
+                $img->setFilename($fichier);
+                $content->addImage($img);
+                $content->setUser($this->getUser());
+            }
             $contentRepository->save($content, true);
 
             return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
@@ -103,11 +122,10 @@ class ContentController extends AbstractController
         return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/delete/image/{id}', name: 'content_delete_image', methods: ['GET', 'DELETE'])]
+    #[Route('/delete/image/{id}', name: 'content_delete_image', methods: ['DELETE'])]
     public function deleteImage(Image $image, Request $request, EntityManagerInterface $entityManager){
         $data = json_decode($request->getContent(), true);
 
-        dump($data);
         // On vérifie si le token est valide
         if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
             // On récupère le nom de l'image

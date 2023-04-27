@@ -21,8 +21,7 @@
                 <td>{{ content.description }}</td>
                 <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_content_show', {'id': content.id}) }}">show</a>
-                    <a href="{{ path('app_content_edit', {'id': content.id}) }}">edit</a>
+                    <a href="{{ path('app_content_edit', {'id': content.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}

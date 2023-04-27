@@ -1,17 +1,11 @@
 {% extends '/admin/index.html.twig' %}
 
-{% block javascripts %}
-    <script src="{{ asset('js/image.js') }}"></script>
-{% endblock %}
-
 {% block title %}Edit Content{% endblock %}
 
 {% block body %}
     <h1>Edit Content</h1>
 
-    {{ include('content/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('content/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_content_index') }}">back to list</a>
-
-    {{ include('content/_delete_form.html.twig') }}
+    <a href="{{ path('app_content_index') }}">Retourner à la liste</a>
 {% endblock %}
