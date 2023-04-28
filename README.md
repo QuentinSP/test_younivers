@@ -31,7 +31,6 @@ A list of technologies used within the project:
 Voici les étapes à suivre pour l'installation du projet
 ```
 $ git clone https://github.com/QuentinSP/test_younivers.git
-$ cd vitrine
 $ composer install
 $ yarn install
 $ php bin/console doctrine:migrations:migrate
