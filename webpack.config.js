@@ -20,6 +20,11 @@ Encore
     })
 
     .copyFiles({
+        from: './public/uploads',
+        to: './assets/images/[path][name].[ext]',
+    })
+
+    .copyFiles({
         from: './vendors',
         to: './assets/vendors/[path][name].[ext]',
     })

@@ -25,12 +25,16 @@ class Content
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'content', targetEntity: Image::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'content', targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private Collection $images;
 
     #[ORM\ManyToOne(inversedBy: 'contents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'contents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ContentSector $content_sector = null;
 
     public function __construct()
     {
@@ -117,6 +121,18 @@ class Content
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getContentSector(): ?ContentSector
+    {
+        return $this->content_sector;
+    }
+
+    public function setContentSector(?ContentSector $content_sector): self
+    {
+        $this->content_sector = $content_sector;
 
         return $this;
     }

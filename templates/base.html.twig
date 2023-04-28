@@ -151,7 +151,11 @@
                             <li><a href="#">Contact</a></li>
 
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <li><a href="{{ path('admin') }}">Administration</a></li>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <li><a href="{{ path('admin') }}">Administration</a></li>
+                                {% elseif is_granted('ROLE_ADMIN')%}
+                                    <li><a href="{{ path('app_content_index') }}">Mes contenus</a></li>
+                                {% endif %}
                             {% else %}
                                 <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                             {% endif %}
@@ -176,6 +180,7 @@
     </div><!-- /.stricky-header -->
 
 
+    {% if contentDiapo is null %}
     <!--Main Slider Start-->
     <section class="main-slider-two">
         <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
@@ -217,7 +222,6 @@
 
                 <div class="swiper-slide">
                     <div class="image-layer-two"
-{#                         style="background-image: url(../assets/images/backgrounds/main-slider-2-2.jpg);"></div>#}
                     style="background-image: url({{ asset('build/assets/images/backgrounds/main-slider-2-2.jpg') }});"></div>
                     <!-- /.image-layer -->
 
@@ -239,7 +243,6 @@
 
                 <div class="swiper-slide">
                     <div class="image-layer-two"
-{#                         style="background-image: url(../assets/images/backgrounds/main-slider-2-3.jpg);"></div>#}
                          style="background-image: url({{ asset('build/assets/images/backgrounds/main-slider-2-3.jpg') }});"></div>
                     <!-- /.image-layer -->
 
@@ -270,7 +273,49 @@
         </div>
     </section>
     <!--Main Slider End-->
+    {% else %}
 
+    <section class="main-slider-two">
+            <div class="swiper-container thm-swiper__slider" data-swiper-options='{"slidesPerView": 1, "loop": true,
+        "effect": "fade",
+        "pagination": {
+        "el": "#main-slider-pagination",
+        "type": "bullets",
+        "clickable": true
+        },
+        "navigation": {
+        "nextEl": "#main-slider__swiper-button-next",
+        "prevEl": "#main-slider__swiper-button-prev"
+        },
+        "autoplay": {
+        "delay": 5000
+        }}'>
+            <div class="swiper-wrapper">
+
+            {% for image in imagesDiapo %}
+                <div class="swiper-slide">
+                    <div class="image-layer-two" style="background-image: url({{ asset('build/assets/images/' ~  image.filename ) }});"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="main-slider-two__content">
+                                    <p class="main-slider-two__sub-title">{{ contentDiapo.title }}</p>
+                                    <h2 class="main-slider-two__title">{{ contentDiapo.description }}</h2>
+                                    <div class="main-slider-two__btn-box">
+                                        <a href="#" class="thm-btn main-slider-two__btn">Découvrir l'institut</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+
+            <div class="swiper-pagination" id="main-slider-pagination"></div>
+            </div>
+    </section>
+    {% endif %}
 
     <!--About One Start-->
     <section class="about-one">
@@ -612,6 +657,7 @@
     <!--Video One End-->
 
 
+    {% if imagesMarques is null %}
     <!--Team One Start-->
     <section class="team-one">
         <div class="container">
@@ -669,7 +715,31 @@
         </div>
     </section>
     <!--Team One End-->
-
+    {% else %}
+        <section class="team-one">
+            <div class="container">
+                <div class="section-title text-center">
+                    <span class="section-title__tagline">Escale Beauté</span>
+                    <h2 class="section-title__title">Nos marques références</h2>
+                </div>
+                <div class="row">
+                    {% for imageMarque in imagesMarques %}
+                        <!--Team One Single Start-->
+                        <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay="100ms">
+                            <div class="team-one__single">
+                                <div class="team-one__img"><img src="{{ asset('build/assets/images/' ~  imageMarque.filename ) }}" alt=""> </div>#}
+                                <div class="team-one__content">
+                                    <h3 class="team-one__name"><a href="#">{{ contentMarques.title }}</a></h3>
+                                    <p class="team-one__sub-title">{{ contentMarques.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!--Team One Single End-->
+                </div>
+            </div>
+        </section>
+    {% endif %}
 
 
 

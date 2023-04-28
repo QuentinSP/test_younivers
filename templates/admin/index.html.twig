@@ -1,24 +1,35 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="{{ asset('build/assets/js/image.js') }}"></script>
-{#    <script src="../../js/image.js"></script>#}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" id="bootstrap-css">
+
+<script>
+    $(document).ready(function () {
+        var table = new DataTable('#content-table', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',
+            },
+            columnDefs: {
+                "targets": 'no-sort',
+                "ordering": false,
+            }
+        });
+    });
+</script>
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
-                MENU
-            </button>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ path('admin') }}">
-                Administration
-            </a>
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a class="navbar-brand" href="{{ path('admin') }}">
+                    Administration
+                </a>
+            {% endif %}
+
             <a class="navbar-brand" href="{{ path('app_content_index') }}">
                 Les contenus
             </a>
@@ -35,47 +46,35 @@
 </nav>
 {% block body %}
 <div class="container-fluid main-container">
-    <div class="col-md-2 sidebar">
-        <div class="row">
-            <!-- uncomment code for absolute positioning tweek see top comment in css -->
-            <div class="absolute-wrapper"> </div>
-            <!-- Menu -->
-            <div class="side-menu">
-                <nav class="navbar navbar-default" role="navigation">
-                    <!-- Main Menu -->
-                    <div class="side-menu-container">
-                        <ul class="nav navbar-nav">
-                            {% for content in contents %}
-                                <li><a href="#"><span class="glyphicon glyphicon-dashboard"></span> {{ content.title }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </nav>
+    <table class="table" id="user-table">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th class="no-sort">Date de création</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.roles|json_encode|raw }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-            </div>
-        </div>
-    </div>
-    <div class="col-md-10 content">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Dashboard
-            </div>
-            <div class="panel-body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
-        </div>
-    </div>
-    {% endblock body %}
-    <footer class="pull-left footer">
-        <p class="col-md-12">
-{#        <hr class="divider">#}
-{#        Copyright &COPY; 2015 #}
-{#        <a href="http://www.pingpong-labs.com">Gravitano</a>#}
-{#        </p>#}
-    </footer>
+    <a href="{{ path('app_register') }}">Créer utilisateur</a>
 </div>
+{% endblock body %}

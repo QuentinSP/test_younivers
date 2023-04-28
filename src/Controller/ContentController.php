@@ -20,7 +20,7 @@ class ContentController extends AbstractController
     public function index(ContentRepository $contentRepository): Response
     {
         return $this->render('content/index.html.twig', [
-            'contents' => $contentRepository->findAll(),
+            'contents' => $contentRepository->findBy(['user' => $this->getUser()]),
         ]);
     }
 
@@ -56,10 +56,6 @@ class ContentController extends AbstractController
 
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }
-
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $entityManager->persist($content);
-//        $entityManager->flush();
 
         return $this->renderForm('content/new.html.twig', [
             'content' => $content,

@@ -5,13 +5,13 @@
 {% block body %}
     <h1>Les contenus</h1>
 
-    <table class="table">
+    <table class="table" id="content-table">
         <thead>
             <tr>
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Date de création</th>
-                <th>Actions</th>
+                <th class="no-sort">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,11 +22,15 @@
                 <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_content_edit', {'id': content.id}) }}">Modifier</a>
+{#                    <a href="{{ path('app_content_delete', {'id': content.id}) }}">Supprimer</a>#}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td>no records found</td>
+                <td style="display: none"></td>
+                <td style="display: none"></td>
+                <td style="display: none"></td>
             </tr>
         {% endfor %}
         </tbody>
