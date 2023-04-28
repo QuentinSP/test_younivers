@@ -11,9 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'accueil')]
-    public function accueil(ContentRepository $contentRepository, ImageRepository $imageRepository)
+    public function accueil(ContentRepository $contentRepository)
     {
-        //get content of the user
+        //get user content
         $contents = $contentRepository->findBy(['user' => $this->getUser()]);
 
         $contentDiapo = null;
@@ -24,12 +24,12 @@ class AccueilController extends AbstractController
         foreach ($contents as $content) {
             if ($content->getContentSector()->getId() == 1){
                 $contentDiapo = $content;
-                $imagesDiapo = $imageRepository->findBy(['content' => $content]);
+                $imagesDiapo = $content->getImages();
             }
 
             if ($content->getContentSector()->getId() == 2) {
                 $contentMarques = $content;
-                $imagesMarques = $imageRepository->findBy(['content' => $content]);
+                $imagesMarques = $content->getImages();
             }
         }
 
