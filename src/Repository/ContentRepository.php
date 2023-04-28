@@ -39,28 +39,13 @@ class ContentRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Content[] Returns an array of Content objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByIdThenReturnArray($id){
+        $query = $this->createQueryBuilder('c')
+            ->andWhere('c.user = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getArrayResult();
 
-//    public function findOneBySomeField($value): ?Content
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $query;
+    }
 }

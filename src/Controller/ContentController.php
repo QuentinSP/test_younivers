@@ -139,4 +139,11 @@ class ContentController extends AbstractController
             return new JsonResponse(['error' => 'Token Invalide'], 400);
         }
     }
+
+    #[Route('/api/posts/{id}', methods: ['GET', 'HEAD'])]
+    public function apiContent(int $id, ContentRepository $contentRepository): Response
+    {
+        $contents = $contentRepository->findByIdThenReturnArray($id);
+        return new JsonResponse(['contents' => $contents]);
+    }
 }
