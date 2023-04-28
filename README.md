@@ -39,4 +39,4 @@ Je reste évidemment à votre disposition en cas de problèmes.
 ## Ameliorations
 ***
 
-. J'aurais aimé encore approndir les formulaires de personnalisation de template. (pouvoir agir sur plus de secteur et rendre ça encore plus dynamique)
+. J'aurais aimé encore approfondir les formulaires de personnalisation de template. (pouvoir agir sur plus de secteurs et rendre ça encore plus dynamique)
