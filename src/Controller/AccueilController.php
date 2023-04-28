@@ -35,7 +35,7 @@ class AccueilController extends AbstractController
 
         return $this->render('/base.html.twig', [
             'page_title' => 'ma page',
-            'user' => $this->getUser()->getUserIdentifier(),
+            'user' => $this->getUser() != null ? $this->getUser()->getUserIdentifier() : '',
             'contentDiapo' => $contentDiapo,
             'contentMarques' => $contentMarques,
             'imagesDiapo' => $imagesDiapo,

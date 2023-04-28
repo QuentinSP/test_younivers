@@ -24,18 +24,20 @@
     <div class="container-fluid">
         <div class="navbar-header">
 
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <a class="navbar-brand" href="{{ path('admin') }}">
-                    Administration
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <a class="navbar-brand" href="{{ path('admin') }}">
+                        Administration
+                    </a>
+                {% endif %}
+
+                <a class="navbar-brand" href="{{ path('app_content_index') }}">
+                    Les contenus
+                </a>
+                <a class="navbar-brand" href="{{ path('app_content_new') }}">
+                    Créer contenu
                 </a>
             {% endif %}
-
-            <a class="navbar-brand" href="{{ path('app_content_index') }}">
-                Les contenus
-            </a>
-            <a class="navbar-brand" href="{{ path('app_content_new') }}">
-                Créer contenu
-            </a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
@@ -52,6 +54,7 @@
             <th>Email</th>
             <th>Prénom</th>
             <th>Nom</th>
+            <th>Rôles</th>
             <th class="no-sort">Date de création</th>
         </tr>
         </thead>

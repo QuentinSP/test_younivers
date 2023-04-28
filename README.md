@@ -7,6 +7,16 @@
 ***
 You'Nivers - Test technique / site vitrine 
 
+Les rôles : <br>
+    . Un client ne peut pas accéder au back.<br>
+    . Un admin peut accéder au back pour la gestion de contenu.<br>
+    . Un super admin peut, en plus, gérer les utilisateurs.
+
+Une fois un utilisateur créer, le super admin peut lui attribuer un rôle.
+
+La méthode apiContent() retourne la liste des contenus pour un user avec cette route : /api/posts/{id}
+
+La BDD se nomme vitrine
 ## Technologies
 ***
 A list of technologies used within the project:
@@ -14,7 +24,7 @@ A list of technologies used within the project:
 * PHP : Version 8.2
 * Composer
 * Yarn
-* Node
+* MYSQL
 
 ## Installation
 ***
@@ -23,7 +33,6 @@ Voici les étapes à suivre pour l'installation du projet
 $ git clone https://github.com/QuentinSP/test_younivers.git
 $ cd vitrine
 $ composer install
-$ npm install
 $ yarn install
 $ php bin/console doctrine:migrations:migrate
 $ symfony server:start
@@ -39,4 +48,5 @@ Je reste évidemment à votre disposition en cas de problèmes.
 ## Ameliorations
 ***
 
-. J'aurais aimé encore approfondir les formulaires de personnalisation de template. (pouvoir agir sur plus de secteurs et rendre ça encore plus dynamique)
+. J'aurais aimé encore approfondir les formulaires de personnalisation de template. (pouvoir agir sur plus de secteurs et rendre ça encore plus dynamique) <BR>
+. Cacher les infos du .env
